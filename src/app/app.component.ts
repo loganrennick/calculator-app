@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, registerLocaleData } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +17,7 @@ export class AppComponent {
   constructor(private decPipe: DecimalPipe) { }
 
   formatNum(func: string) {
+    console.log(`currNum:${this.currNum} prevNum:${this.prevNum} prevDisplay:${this.prevDisplay}`);
     if (func === "+" || func === "-" || func === "x" || func === "/") {
       this.display = this.display + func;
       this.prevDisplay = this.display;
@@ -28,12 +29,25 @@ export class AppComponent {
       else
         this.display = "0.";
     } else if (func === "del") {
-      this.display = this.display.substring(0, this.display.length - 1);
-      if (!isNaN(+this.prevFunc)) { // if prevFunc is a number
+      if (!isNaN(+this.display.charAt(this.display.length - 1))) { // if prevFunc is a number _or_ (prevFunc is del and lastChar of display is a number)
         let numString = this.currNum.toString();
         this.currNum = +numString.substring(0, numString.length - 1);
-      } else if (this.prevFunc === "+" || this.prevFunc === "-" || this.prevFunc === "x" || this.prevFunc === "/") {
+        if (this.currNum === 0) {
+          this.display = this.display.substring(0, this.display.length - 1);
+          this.currNum = this.prevNum;
+          this.prevNum = 0;
+        } else {
+          this.display = this.prevDisplay + (this.decPipe.transform(this.currNum) ?? "");
+        }
+      } else {  // if prevFunc is an operator _or_ (prevFunc is del and lastChar of display is an operator )
         this.currNum = this.prevNum;
+        this.prevNum = 0;
+        this.display = this.display.substring(0, this.display.length - 1);
+        this.prevDisplay = this.display;
+        while (this.prevDisplay != "" && !isNaN(+this.prevDisplay.charAt(this.prevDisplay.length - 1))) { // keep removing last char of prevDisplay until last char is NaN
+          this.prevDisplay = this.prevDisplay.substring(0, this.prevDisplay.length - 1);
+        }
+
       }
     }
     else if (this.currNum === 0 && this.prevFunc != ".") {

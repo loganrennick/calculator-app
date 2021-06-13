@@ -1,4 +1,12 @@
 @import ../styles
+@mixin box-shadow($params)
+    -webkit-box-shadow: $params
+    -moz-box-shadow: $params
+    box-shadow: $params
+
+$inner-shadow: 0 0 5px 1px $key-shadow-num inset
+$inner-shadow-del: 0 0 5px 1px $key-shadow-del inset
+$inner-shadow-equals: 0 0 5px 1px $key-shadow-equals inset
 
 .header
     margin-top: 6em
@@ -99,7 +107,9 @@ p
     width: 100%
     height: 60px
     border-radius: 10px
-    cursor: pointer
+    z-index: 5
+    grid-column-start: 1
+    grid-row-start: 1
     p
         font-size: 32px
         font-weight: 700
@@ -112,166 +122,100 @@ p
     height: 60px
     margin-top: 4px
     border-radius: 10px
-.key-1
+    z-index: 3
+    grid-column-start: 1
+    grid-row-start: 1
+.key-group
+    grid-template-columns: auto
+    grid-template-rows: auto
+    padding: 0
+    cursor: pointer
+    &:hover
+        div
+            @include box-shadow($inner-shadow)
+.key-group-1
     grid-column-start: 2
     grid-row-start: 6
-    z-index: 5
-.shadow-1
-    grid-column-start: 2
-    grid-row-start: 6
-    z-index: 3
-.key-2
+.key-group-2
     grid-column-start: 4
     grid-row-start: 6
-    z-index: 5
-.shadow-2
-    grid-column-start: 4
-    grid-row-start: 6
-    z-index: 3
-.key-3
+.key-group-3
     grid-column-start: 6
     grid-row-start: 6
-    z-index: 5
-.shadow-3
-    grid-column-start: 6
-    grid-row-start: 6
-    z-index: 3
-.key-4
+.key-group-4
     grid-column-start: 2
     grid-row-start: 4
-    z-index: 5
-.shadow-4
-    grid-column-start: 2
-    grid-row-start: 4
-    z-index: 3
-.key-5
+.key-group-5
     grid-column-start: 4
     grid-row-start: 4
-    z-index: 5
-.shadow-5
-    grid-column-start: 4
-    grid-row-start: 4
-    z-index: 3
-.key-6
+.key-group-6
     grid-column-start: 6
     grid-row-start: 4
-    z-index: 5
-.shadow-6
-    grid-column-start: 6
-    grid-row-start: 4
-    z-index: 3
-.key-7
+.key-group-7
     grid-column-start: 2
     grid-row-start: 2
-    z-index: 5
-.shadow-7
-    grid-column-start: 2
-    grid-row-start: 2
-    z-index: 3
-.key-8
+.key-group-8
     grid-column-start: 4
     grid-row-start: 2
-    z-index: 5
-.shadow-8
-    grid-column-start: 4
-    grid-row-start: 2
-    z-index: 3
-.key-9
+.key-group-9
     grid-column-start: 6
     grid-row-start: 2
-    z-index: 5
-.shadow-9
-    grid-column-start: 6
-    grid-row-start: 2
-    z-index: 3
-.key-0
+.key-group-0
     grid-column-start: 4
     grid-row-start: 8
-    z-index: 5
-.shadow-0
-    grid-column-start: 4
-    grid-row-start: 8
-    z-index: 3
-.key-dec
+.key-group-dec
     grid-column-start: 2
     grid-row-start: 8
-    z-index: 5
-.shadow-dec
-    grid-column-start: 2
-    grid-row-start: 8
-    z-index: 3
-.key-div
+.key-group-div
     grid-column-start: 6
     grid-row-start: 8
-    z-index: 5
-.shadow-div
-    grid-column-start: 6
-    grid-row-start: 8
-    z-index: 3
-.key-mul
+.key-group-mul
     grid-column-start: 8
     grid-row-start: 8
-    z-index: 5
-.shadow-mul
-    grid-column-start: 8
-    grid-row-start: 8
-    z-index: 3
-.key-sub
+.key-group-sub
     grid-column-start: 8
     grid-row-start: 6
-    z-index: 5
-.shadow-sub
-    grid-column-start: 8
-    grid-row-start: 6
-    z-index: 3
-.key-add
+.key-group-add
     grid-column-start: 8
     grid-row-start: 4
-    z-index: 5
-.shadow-add
+.key-group-del
     grid-column-start: 8
-    grid-row-start: 4
-    z-index: 3
+    grid-row-start: 2
+    &:hover
+        div
+            @include box-shadow($inner-shadow-del)
 .key-del
-    grid-column-start: 8
-    grid-row-start: 2
-    z-index: 5
     background-color: $key-bgd-del !important
     p
         color: $text-light
         font-size: 1.3em
 .shadow-del
-    grid-column-start: 8
-    grid-row-start: 2
-    z-index: 3
     background-color: $key-shadow-del !important
-.key-reset
+.key-group-reset
     grid-column-start: 2
     grid-column-end: 5
     grid-row-start: 10
-    z-index: 5
+    &:hover
+        div
+            @include box-shadow($inner-shadow-del)
+.key-reset
     background-color: $key-bgd-del !important
     p
         color: $text-light
         font-size: 1.3em
 .shadow-reset
-    grid-column-start: 2
-    grid-column-end: 5
-    grid-row-start: 10
-    z-index: 3
     background-color: $key-shadow-del !important
-.key-equals
+.key-group-equals
     grid-column-start: 6
     grid-column-end: 9
     grid-row-start: 10
-    z-index: 5
+    &:hover
+        div
+            @include box-shadow($inner-shadow-equals)
+.key-equals
     background-color: $key-bgd-equals !important
     p
         color: $text-light
         font-size: 1.3em
 .shadow-equals
-    grid-column-start: 6
-    grid-column-end: 9
-    grid-row-start: 10
-    z-index: 3
     background-color: $key-shadow-equals !important
