@@ -23,7 +23,10 @@ export class AppComponent {
       this.prevNum = this.currNum;
       this.currNum = 0;
     } else if (func === ".") {
-      this.display = this.display + func;
+      if (this.prevFunc != "=")
+        this.display = this.display + func;
+      else
+        this.display = "0.";
     } else if (func === "del") {
       this.display = this.display.substring(0, this.display.length - 1);
       if (!isNaN(+this.prevFunc)) { // if prevFunc is a number
@@ -33,10 +36,10 @@ export class AppComponent {
         this.currNum = this.prevNum;
       }
     }
-    else if (this.currNum === 0) {
-      this.currNum = +func
+    else if (this.currNum === 0 && this.prevFunc != ".") {
+      this.currNum = +func;
       this.display = this.prevDisplay + this.currNum;
-    } else {
+    } else { // if func is non-zero number
       if (this.prevFunc === ".") {
         this.currNum = +(this.currNum + "." + func);
         this.display = this.prevDisplay + (this.decPipe.transform(this.currNum) ?? "");
@@ -64,7 +67,8 @@ export class AppComponent {
           total = total / +nums[i].replace(",", "");
         }
       }
-      this.currNum = total;
+      this.currNum = 0;
+      this.prevDisplay = "";
       this.display = this.decPipe.transform(total) ?? "0";
     }
   }
@@ -76,15 +80,20 @@ export class AppComponent {
       } else {
         this.display = "0";
         this.currNum = 0;
+        this.prevDisplay = "";
       }
     } else if (func === "reset") {
       this.display = "0";
       this.currNum = 0;
       this.prevNum = 0;
+      this.prevDisplay = "";
     } else if (func === "=") {
       this.evaluateDisplay();
     } else if (func === "+" || func === "-" || func === "x" || func === "/") {
-      if (this.prevFunc === "+" || this.prevFunc === "-" || this.prevFunc === "x" || this.prevFunc === "/") { this.display = this.display.substr(0, this.display.length - 1) + func }
+      if (this.prevFunc === "+" || this.prevFunc === "-" || this.prevFunc === "x" || this.prevFunc === "/") {
+        this.display = this.display.substr(0, this.display.length - 1) + func;
+        this.prevDisplay = this.display;
+      }
     } if (this.display.length != 14) {
       if (func === "+" || func === "-" || func === "x" || func === "/") {
         if (this.prevFunc === "+" || this.prevFunc === "-" || this.prevFunc === "x" || this.prevFunc === "/") { this.display = this.display.substr(0, this.display.length - 1) + func }
@@ -93,9 +102,10 @@ export class AppComponent {
         if (!this.display.includes(func)) {
           this.formatNum(func);
         }
-      } else if (!(isNaN(+func))) {
+      } else if (!(isNaN(+func))) { // if func is a number
         if (this.display === "0") {
-          this.display = func
+          this.display = func;
+          this.currNum = +func;
         } else {
           this.formatNum(func);
         }
