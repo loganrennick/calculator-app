@@ -8,7 +8,7 @@
         <div class="col-6" style="padding-right: 2px;">
           <div class="d-flex flex-row-reverse">
             <div class="d-grid switch-container">
-              <!-- <div class="item-knob-1">
+              <div class="item-knob-1">
                 <img class="knob" src="../assets/Knob.svg" alt="knob">
               </div>
               <div class="item-knob-2" hidden>
@@ -19,8 +19,8 @@
               </div>
               <div class="item-switch">
                 <img class="switch" src="../assets/Switch.svg" alt="switch">
-              </div> -->
-              <div class="item-knob-1">
+              </div>
+              <!-- <div class="item-knob-1">
                 <img class="knob" src="../calculator-app/assets/Knob.svg" alt="knob">
               </div>
               <div class="item-knob-2" hidden>
@@ -31,7 +31,7 @@
               </div>
               <div class="item-switch">
                 <img class="switch" src="../calculator-app/assets/Switch.svg" alt="switch">
-              </div>
+              </div> -->
               <div class="item-1">
                 <p>1</p>
               </div>
@@ -48,59 +48,60 @@
       </div>
       <div class="screen row mt-4 d-grid">
         <div class="screen-item">
-          <p>399,981</p>
+          <p>{{display}}</p>
         </div>
       </div>
       <div class="pad row mt-4 d-grid">
-        <div class="key key-1 align-items-center d-flex justify-content-center">
-          <p>1</p>
-        </div>
-        <div class="key key-2 align-items-center d-flex justify-content-center">
-          <p>2</p>
-        </div>
-        <div class="key key-3 align-items-center d-flex justify-content-center">
-          <p>3</p>
-        </div>
-        <div class="key key-4 align-items-center d-flex justify-content-center">
-          <p>4</p>
-        </div>
-        <div class="key key-5 align-items-center d-flex justify-content-center">
-          <p>5</p>
-        </div>
-        <div class="key key-6 align-items-center d-flex justify-content-center">
-          <p>6</p>
-        </div>
-        <div class="key key-7 align-items-center d-flex justify-content-center">
+
+        <div (click)="updateDisplay('7')" class="key key-7 align-items-center d-flex justify-content-center">
           <p>7</p>
         </div>
-        <div class="key key-8 align-items-center d-flex justify-content-center">
+        <div (click)="updateDisplay('8')" class="key key-8 align-items-center d-flex justify-content-center">
           <p>8</p>
         </div>
-        <div class="key key-9 align-items-center d-flex justify-content-center">
+        <div (click)="updateDisplay('9')" class="key key-9 align-items-center d-flex justify-content-center">
           <p>9</p>
         </div>
-        <div class="key key-0 align-items-center d-flex justify-content-center">
-          <p>0</p>
-        </div>
-        <div class="key key-div align-items-center d-flex justify-content-center">
-          <p>/</p>
-        </div>
-        <div class="key key-mul align-items-center d-flex justify-content-center">
-          <p>x</p>
-        </div>
-        <div class="key key-sub align-items-center d-flex justify-content-center">
-          <p>-</p>
-        </div>
-        <div class="key key-add align-items-center d-flex justify-content-center">
-          <p>+</p>
-        </div>
-        <div class="key key-dec align-items-center d-flex justify-content-center">
-          <p>.</p>
-        </div>
-        <div class="key key-del align-items-center d-flex justify-content-center">
+        <div (click)="updateDisplay('del')" class="key key-del align-items-center d-flex justify-content-center">
           <p>DEL</p>
         </div>
-        <div class="key key-reset align-items-center d-flex justify-content-center">
+        <div (click)="updateDisplay('4')" class="key key-4 align-items-center d-flex justify-content-center">
+          <p>4</p>
+        </div>
+        <div (click)="updateDisplay('5')" class="key key-5 align-items-center d-flex justify-content-center">
+          <p>5</p>
+        </div>
+        <div (click)="updateDisplay('6')" class="key key-6 align-items-center d-flex justify-content-center">
+          <p>6</p>
+        </div>
+        <div (click)="updateDisplay('+')" class="key key-add align-items-center d-flex justify-content-center">
+          <p>+</p>
+        </div>
+        <div (click)="updateDisplay('1')" class="key key-1 align-items-center d-flex justify-content-center">
+          <p>1</p>
+        </div>
+        <div (click)="updateDisplay('2')" class="key key-2 align-items-center d-flex justify-content-center">
+          <p>2</p>
+        </div>
+        <div (click)="updateDisplay('3')" class="key key-3 align-items-center d-flex justify-content-center">
+          <p>3</p>
+        </div>
+        <div (click)="updateDisplay('-')" class="key key-sub align-items-center d-flex justify-content-center">
+          <p>-</p>
+        </div>
+        <div (click)="updateDisplay('.')" class="key key-dec align-items-center d-flex justify-content-center">
+          <p>.</p>
+        </div>
+        <div (click)="updateDisplay('0')" class="key key-0 align-items-center d-flex justify-content-center">
+          <p>0</p>
+        </div>
+        <div (click)="updateDisplay('/')" class="key key-div align-items-center d-flex justify-content-center">
+          <p>/</p>
+        </div>
+        <div (click)="updateDisplay('x')" class="key key-mul align-items-center d-flex justify-content-center">
+          <p>x</p>
+        </div>
+        <div (click)="updateDisplay('reset')" class="key key-reset align-items-center d-flex justify-content-center">
           <p>RESET</p>
         </div>
         <div class="key key-equals align-items-center d-flex justify-content-center">
