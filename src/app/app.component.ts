@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -8,34 +9,99 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'calculator-app';
   public display: string = "0";
-  evaluateDisplay() {
-    let nums = this.display.split("[+x/-]");
+  public currNum: number = 0;
+  public prevNum: number = 0;
+  public prevDisplay: string = "";
+  public prevFunc: string = "";
+
+  constructor(private decPipe: DecimalPipe) { }
+
+  formatNum(func: string) {
+    if (func === "+" || func === "-" || func === "x" || func === "/") {
+      this.display = this.display + func;
+      this.prevDisplay = this.display;
+      this.prevNum = this.currNum;
+      this.currNum = 0;
+    } else if (func === ".") {
+      this.display = this.display + func;
+    } else if (func === "del") {
+      this.display = this.display.substring(0, this.display.length - 1);
+      if (!isNaN(+this.prevFunc)) { // if prevFunc is a number
+        let numString = this.currNum.toString();
+        this.currNum = +numString.substring(0, numString.length - 1);
+      } else if (this.prevFunc === "+" || this.prevFunc === "-" || this.prevFunc === "x" || this.prevFunc === "/") {
+        this.currNum = this.prevNum;
+      }
+    }
+    else if (this.currNum === 0) {
+      this.currNum = +func
+      this.display = this.prevDisplay + this.currNum;
+    } else {
+      if (this.prevFunc === ".") {
+        this.currNum = +(this.currNum + "." + func);
+        this.display = this.prevDisplay + (this.decPipe.transform(this.currNum) ?? "");
+      } else {
+        this.currNum = +(this.currNum + func);
+        this.display = this.prevDisplay + (this.decPipe.transform(this.currNum) ?? "");
+      }
+    }
   }
+
+  evaluateDisplay() {
+    let nums: string[] = this.display.split(/[+x/-]/);
+    let ops: string[] = this.display.split(/[0-9.,]+/).filter(i => i);
+    if (nums.length === (ops.length + 1) && nums.length > 1) {
+      let total: number = +nums[0];
+      nums.shift();
+      for (let i = 0; i < nums.length; i++) {
+        if (ops[i] === "+") {
+          total = total + +nums[i].replace(",", "");
+        } else if (ops[i] === "-") {
+          total = total - +nums[i].replace(",", "");
+        } else if (ops[i] === "x") {
+          total = total * +nums[i].replace(",", "");
+        } else if (ops[i] === "/") {
+          total = total / +nums[i].replace(",", "");
+        }
+      }
+      this.currNum = total;
+      this.display = this.decPipe.transform(total) ?? "0";
+    }
+  }
+
   updateDisplay(func: string) {
     if (func === "del") {
-      if (this.display.length > 1) {
-        this.display = this.display.substring(0, this.display.length - 1);
-      } else
+      if (this.display.length > 1 && this.prevFunc != "=") {
+        this.formatNum(func);
+      } else {
         this.display = "0";
+        this.currNum = 0;
+      }
     } else if (func === "reset") {
       this.display = "0";
+      this.currNum = 0;
+      this.prevNum = 0;
     } else if (func === "=") {
       this.evaluateDisplay();
-    } else if (this.display.length != 14) {
+    } else if (func === "+" || func === "-" || func === "x" || func === "/") {
+      if (this.prevFunc === "+" || this.prevFunc === "-" || this.prevFunc === "x" || this.prevFunc === "/") { this.display = this.display.substr(0, this.display.length - 1) + func }
+    } if (this.display.length != 14) {
       if (func === "+" || func === "-" || func === "x" || func === "/") {
-        this.display = this.display + func;
+        if (this.prevFunc === "+" || this.prevFunc === "-" || this.prevFunc === "x" || this.prevFunc === "/") { this.display = this.display.substr(0, this.display.length - 1) + func }
+        else { this.formatNum(func); }
       } else if (func === ".") {
         if (!this.display.includes(func)) {
-          this.display = this.display + func;
+          this.formatNum(func);
         }
-      } else {
+      } else if (!(isNaN(+func))) {
         if (this.display === "0") {
           this.display = func
         } else {
-          this.display = this.display + func;
+          this.formatNum(func);
         }
       }
     }
+    this.prevFunc = func;
   }
 
 }
