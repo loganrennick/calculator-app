@@ -68,7 +68,8 @@ export class AppComponent {
     let nums: string[] = this.display.split(/[+x/-]/);
     let ops: string[] = this.display.split(/[0-9.,]+/).filter(i => i);
     if (nums.length === (ops.length + 1) && nums.length > 1) {
-      let total: number = +nums[0];
+      let total: number = +nums[0].replace(',', '');
+      console.log(total);
       nums.shift();
       for (let i = 0; i < nums.length; i++) {
         if (ops[i] === "+") {
