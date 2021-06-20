@@ -8,25 +8,19 @@
         <div class="col-6" style="padding-right: 2px;">
           <div class="d-flex flex-row-reverse">
             <div class="d-grid switch-container">
-              <div class="item-knob-1">
-                <img class="knob" src="../assets/Knob.svg" alt="knob">
-              </div>
-              <div class="item-knob-2" hidden>
-                <img class="knob" src="../assets/Knob.svg" alt="knob">
-              </div>
-              <div class="item-knob-3" hidden>
+              <div class="item-knob-1" [@themeSelect]="themeSelect">
                 <img class="knob" src="../assets/Knob.svg" alt="knob">
               </div>
               <div class="item-switch">
                 <img class="switch" src="../assets/Switch.svg" alt="switch">
               </div>
+              <input [(ngModel)]="themeSelect" class="radio-switch" type="radio" id="theme1" name="switch-radio"
+                value="theme-state-1">
+              <input [(ngModel)]="themeSelect" class="radio-switch" type="radio" id="theme2" name="switch-radio"
+                value="theme-state-2">
+              <input [(ngModel)]="themeSelect" class="radio-switch" type="radio" id="theme3" name="switch-radio"
+                value="theme-state-3">
               <!-- <div class="item-knob-1">
-                <img class="knob" src="../calculator-app/assets/Knob.svg" alt="knob">
-              </div>
-              <div class="item-knob-2" hidden>
-                <img class="knob" src="../calculator-app/assets/Knob.svg" alt="knob">
-              </div>
-              <div class="item-knob-3" hidden>
                 <img class="knob" src="../calculator-app/assets/Knob.svg" alt="knob">
               </div>
               <div class="item-switch">

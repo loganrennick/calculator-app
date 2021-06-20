@@ -1,10 +1,33 @@
 import { Component } from '@angular/core';
-import { DecimalPipe, registerLocaleData } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate
+} from '@angular/animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  styleUrls: ['./app.component.sass'],
+  animations: [
+    trigger('themeSelect', [
+      state('theme-state-1', style({
+        marginLeft: "0px"
+      })),
+      state('theme-state-2', style({
+        marginLeft: "24px"
+      })),
+      state('theme-state-3', style({
+        marginLeft: "48px"
+      })),
+      transition("theme-state-1 => theme-state-2, theme-state-2 => theme-state-1, theme-state-2 => theme-state-3, theme-state-3 => theme-state-2, theme-state-1 => theme-state-3, theme-state-3 => theme-state-1", [
+        animate("0.2s ease-in-out")
+      ])
+    ])
+  ]
 })
 export class AppComponent {
   title = 'calculator-app';
@@ -13,6 +36,7 @@ export class AppComponent {
   public prevNum: number = 0;
   public prevDisplay: string = "";
   public prevFunc: string = "";
+  public themeSelect: string = "theme-state-1";
 
   constructor(private decPipe: DecimalPipe) { }
 
